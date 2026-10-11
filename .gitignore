@@ -1,6 +1,5 @@
 # security
 *.env
-.*.env
 # SYNC: naming convention!
 *_privkey
 

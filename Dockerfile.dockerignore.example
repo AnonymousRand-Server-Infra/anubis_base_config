@@ -1,4 +1,5 @@
 *
 !proxy/anubis/data/
 !services/personal_website/deployment/anubis/
+!services/git_server/deployment/anubis/
 !services/mail_server/deployment/anubis/

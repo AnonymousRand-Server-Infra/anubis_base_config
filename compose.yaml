@@ -1,12 +1,12 @@
 include:
-  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/shared_sckts.yaml
+  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
   - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_NGINX:?}/compose.yaml
 
 services:
   anubis_base:
     container_name: anubis_base
     extends:
-      file: ${PATH_TO_ROOT_DOCKER_PROJ:?}/shared_sckts.yaml
+      file: ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
       service: shared_sckts_user
     profiles:
       # never start this container when included via `include:` and `docker compose up` is run
@@ -16,10 +16,12 @@ services:
       context: ${PATH_TO_ROOT_DOCKER_PROJ:?}
       dockerfile: ${PATH_FROM_ROOT_TO_ANUBIS:?}/Dockerfile
       args:
+        CPU_ARCH: ${CPU_ARCH:?}
         DOCKER_ROOT_USER: ${DOCKER_ROOT_USER:?}
-        CONFIG_SRC_FILES: ${ANUBIS_CONFIG_SRC_FILES:?}
-        CONFIG_DEST_DIR: ${ANUBIS_CONFIG_DEST_DIR:?}
+        ANUBIS_CONFIG_SRC_FILES: ${ANUBIS_CONFIG_SRC_FILES:?}
+        ANUBIS_CONFIG_DEST_DIR: ${ANUBIS_CONFIG_DEST_DIR:?}
         ANUBIS_PRIVKEY_DEST_FILE: ${ANUBIS_PRIVKEY_DEST_FILE:?}
+        PATH_FROM_ROOT_TO_ANUBIS: ${PATH_FROM_ROOT_TO_ANUBIS:?}
     restart: unless-stopped
     # IMPORTANT: this needs to run as the same user as nginx to share the outbound socket!
     # (should be fine as anubis shouldn't need to share sockets with a non-root, non-nginx service)

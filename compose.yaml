@@ -1,19 +1,19 @@
 include:
-  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
-  - ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_NGINX:?}/compose.yaml
+  - ${PATH_TO_SERVER_ROOT:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
+  - ${PATH_TO_SERVER_ROOT:?}/${PATH_FROM_ROOT_TO_NGINX:?}/compose.yaml
 
 services:
   anubis_base:
     container_name: anubis_base
     extends:
-      file: ${PATH_TO_ROOT_DOCKER_PROJ:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
+      file: ${PATH_TO_SERVER_ROOT:?}/${PATH_FROM_ROOT_TO_UTILS:?}/shared_sckts.yaml
       service: shared_sckts_user
     profiles:
       # never start this container when included via `include:` and `docker compose up` is run
       - do_not_start
     build:
       # note that dockerfile cannot access directories above this
-      context: ${PATH_TO_ROOT_DOCKER_PROJ:?}
+      context: ${PATH_TO_SERVER_ROOT:?}
       dockerfile: ${PATH_FROM_ROOT_TO_ANUBIS:?}/Dockerfile
       args:
         CPU_ARCH: ${CPU_ARCH:?}

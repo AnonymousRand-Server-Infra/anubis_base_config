@@ -26,6 +26,7 @@ services:
     # IMPORTANT: this needs to run as the same user as nginx to share the outbound socket!
     # (should be fine as anubis shouldn't need to share sockets with a non-root, non-nginx service)
     user: ${DOCKER_ROOT_USER:?}
+    # SYNC: remember to add `env_file` in each child instance of anubis for `envsubst`!
     environment:
       DIFFICULTY: 4
       SERVE_ROBOTS_TXT: true
